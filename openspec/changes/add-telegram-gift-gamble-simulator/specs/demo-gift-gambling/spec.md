@@ -57,6 +57,10 @@ The system SHALL require confirmation of the exact demo price before a draw and 
 - **WHEN** the committed randomness resolves successfully
 - **THEN** the system replaces the pending state with the awarded virtual gift and its reveal presentation
 
+#### Scenario: Randomness resolution deadline expires
+- **WHEN** verified committed drand randomness is not obtained by the published resolution deadline
+- **THEN** the system cancels the draw, marks the attempt as "Network failure" in history, restores the full demo Stars debit, and awards no gift
+
 ### Requirement: Gift reveal
 The system SHALL reveal the awarded gift's collection, model, backdrop, symbol, rarity, number, estimated value, and comparison with the ticket price.
 
