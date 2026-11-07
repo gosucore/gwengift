@@ -1,0 +1,1999 @@
+{
+  "components": {
+    "schemas": {
+      "AccountResponse": {
+        "properties": {
+          "active_epoch": {
+            "title": "Active Epoch",
+            "type": "integer"
+          },
+          "asset_mode": {
+            "const": "simulated",
+            "default": "simulated",
+            "title": "Asset Mode",
+            "type": "string"
+          },
+          "demo_balance": {
+            "title": "Demo Balance",
+            "type": "integer"
+          },
+          "telegram_user_id": {
+            "title": "Telegram User Id",
+            "type": "integer"
+          },
+          "username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Username"
+          }
+        },
+        "required": [
+          "telegram_user_id",
+          "username",
+          "demo_balance",
+          "active_epoch"
+        ],
+        "title": "AccountResponse",
+        "type": "object"
+      },
+      "AttemptHistoryResponse": {
+        "properties": {
+          "asset_mode": {
+            "const": "simulated",
+            "default": "simulated",
+            "title": "Asset Mode",
+            "type": "string"
+          },
+          "attempts": {
+            "items": {
+              "$ref": "#/components/schemas/BetResponse"
+            },
+            "title": "Attempts",
+            "type": "array"
+          }
+        },
+        "required": ["attempts"],
+        "title": "AttemptHistoryResponse",
+        "type": "object"
+      },
+      "BeaconEvidence": {
+        "properties": {
+          "network": {
+            "title": "Network",
+            "type": "string"
+          },
+          "randomness": {
+            "title": "Randomness",
+            "type": "string"
+          },
+          "round": {
+            "title": "Round",
+            "type": "integer"
+          },
+          "signature": {
+            "title": "Signature",
+            "type": "string"
+          },
+          "verified_at": {
+            "format": "date-time",
+            "title": "Verified At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "network",
+          "round",
+          "signature",
+          "randomness",
+          "verified_at"
+        ],
+        "title": "BeaconEvidence",
+        "type": "object"
+      },
+      "BetResponse": {
+        "properties": {
+          "acceptance_cutoff": {
+            "format": "date-time",
+            "title": "Acceptance Cutoff",
+            "type": "string"
+          },
+          "asset_mode": {
+            "const": "simulated",
+            "default": "simulated",
+            "title": "Asset Mode",
+            "type": "string"
+          },
+          "beacon": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BeaconEvidence"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cancellation_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancellation Reason"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "future_beacon_round": {
+            "title": "Future Beacon Round",
+            "type": "integer"
+          },
+          "gift": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GiftResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "pool_version_hash": {
+            "title": "Pool Version Hash",
+            "type": "string"
+          },
+          "pool_version_id": {
+            "title": "Pool Version Id",
+            "type": "string"
+          },
+          "price": {
+            "title": "Price",
+            "type": "integer"
+          },
+          "remaining_count": {
+            "title": "Remaining Count",
+            "type": "integer"
+          },
+          "resolution_deadline": {
+            "format": "date-time",
+            "title": "Resolution Deadline",
+            "type": "string"
+          },
+          "resolved_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolved At"
+          },
+          "round_id": {
+            "title": "Round Id",
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "PENDING_RANDOMNESS",
+              "RESOLVING",
+              "COMPLETED",
+              "CANCELLED"
+            ],
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "collection_id",
+          "round_id",
+          "pool_version_id",
+          "pool_version_hash",
+          "state",
+          "price",
+          "remaining_count",
+          "future_beacon_round",
+          "acceptance_cutoff",
+          "resolution_deadline",
+          "created_at",
+          "resolved_at",
+          "cancellation_reason",
+          "gift",
+          "beacon"
+        ],
+        "title": "BetResponse",
+        "type": "object"
+      },
+      "CatalogResponse": {
+        "properties": {
+          "asset_mode": {
+            "const": "simulated",
+            "default": "simulated",
+            "title": "Asset Mode",
+            "type": "string"
+          },
+          "collections": {
+            "items": {
+              "$ref": "#/components/schemas/CollectionSummary"
+            },
+            "title": "Collections",
+            "type": "array"
+          }
+        },
+        "required": ["collections"],
+        "title": "CatalogResponse",
+        "type": "object"
+      },
+      "CollectionDetail": {
+        "properties": {
+          "asset_mode": {
+            "const": "simulated",
+            "default": "simulated",
+            "title": "Asset Mode",
+            "type": "string"
+          },
+          "available": {
+            "title": "Available",
+            "type": "boolean"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "pool": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicPoolVersion"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "round": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicRound"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "valuation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicValuation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "status",
+          "available",
+          "pool",
+          "valuation",
+          "round"
+        ],
+        "title": "CollectionDetail",
+        "type": "object"
+      },
+      "CollectionSummary": {
+        "properties": {
+          "asset_mode": {
+            "const": "simulated",
+            "default": "simulated",
+            "title": "Asset Mode",
+            "type": "string"
+          },
+          "available": {
+            "title": "Available",
+            "type": "boolean"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "pool": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicPoolVersion"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "valuation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicValuation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "status",
+          "available",
+          "pool",
+          "valuation"
+        ],
+        "title": "CollectionSummary",
+        "type": "object"
+      },
+      "CreateBetRequest": {
+        "properties": {
+          "collection_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "idempotency_key": {
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Idempotency Key",
+            "type": "string"
+          },
+          "pool_version_id": {
+            "maxLength": 36,
+            "minLength": 1,
+            "title": "Pool Version Id",
+            "type": "string"
+          }
+        },
+        "required": ["collection_id", "pool_version_id", "idempotency_key"],
+        "title": "CreateBetRequest",
+        "type": "object"
+      },
+      "DisclosedBeaconProof": {
+        "additionalProperties": false,
+        "properties": {
+          "network": {
+            "title": "Network",
+            "type": "string"
+          },
+          "randomness": {
+            "title": "Randomness",
+            "type": "string"
+          },
+          "response": {
+            "additionalProperties": true,
+            "title": "Response",
+            "type": "object"
+          },
+          "round": {
+            "title": "Round",
+            "type": "integer"
+          },
+          "signature": {
+            "title": "Signature",
+            "type": "string"
+          },
+          "verification_result": {
+            "const": true,
+            "title": "Verification Result",
+            "type": "boolean"
+          },
+          "verified_at": {
+            "format": "date-time",
+            "title": "Verified At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "network",
+          "round",
+          "signature",
+          "randomness",
+          "verification_result",
+          "response",
+          "verified_at"
+        ],
+        "title": "DisclosedBeaconProof",
+        "type": "object"
+      },
+      "DisclosedBet": {
+        "additionalProperties": false,
+        "properties": {
+          "acceptance_cutoff": {
+            "format": "date-time",
+            "title": "Acceptance Cutoff",
+            "type": "string"
+          },
+          "beacon_proof": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DisclosedBeaconProof"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cancellation_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancellation Reason"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "future_beacon_round": {
+            "title": "Future Beacon Round",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "idempotency_key": {
+            "title": "Idempotency Key",
+            "type": "string"
+          },
+          "ledger_entries": {
+            "items": {
+              "$ref": "#/components/schemas/DisclosedLedgerEntry"
+            },
+            "title": "Ledger Entries",
+            "type": "array"
+          },
+          "pool_version_hash": {
+            "title": "Pool Version Hash",
+            "type": "string"
+          },
+          "pool_version_id": {
+            "title": "Pool Version Id",
+            "type": "string"
+          },
+          "price": {
+            "title": "Price",
+            "type": "integer"
+          },
+          "remaining_count": {
+            "title": "Remaining Count",
+            "type": "integer"
+          },
+          "resolution_deadline": {
+            "format": "date-time",
+            "title": "Resolution Deadline",
+            "type": "string"
+          },
+          "resolved_at": {
+            "format": "date-time",
+            "title": "Resolved At",
+            "type": "string"
+          },
+          "selected_gift_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Gift Id"
+          },
+          "state": {
+            "enum": ["COMPLETED", "CANCELLED"],
+            "title": "State",
+            "type": "string"
+          },
+          "user_epoch": {
+            "title": "User Epoch",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "user_epoch",
+          "pool_version_id",
+          "pool_version_hash",
+          "idempotency_key",
+          "future_beacon_round",
+          "acceptance_cutoff",
+          "resolution_deadline",
+          "state",
+          "price",
+          "remaining_count",
+          "selected_gift_id",
+          "cancellation_reason",
+          "created_at",
+          "resolved_at",
+          "ledger_entries",
+          "beacon_proof"
+        ],
+        "title": "DisclosedBet",
+        "type": "object"
+      },
+      "DisclosedGift": {
+        "additionalProperties": false,
+        "properties": {
+          "backdrop": {
+            "title": "Backdrop",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "lifecycle": {
+            "enum": ["AVAILABLE", "AWARDED"],
+            "title": "Lifecycle",
+            "type": "string"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "number": {
+            "title": "Number",
+            "type": "integer"
+          },
+          "owner_epoch": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Epoch"
+          },
+          "player_sale_estimate": {
+            "title": "Player Sale Estimate",
+            "type": "integer"
+          },
+          "rarity": {
+            "title": "Rarity",
+            "type": "string"
+          },
+          "replacement_cost": {
+            "title": "Replacement Cost",
+            "type": "integer"
+          },
+          "symbol": {
+            "title": "Symbol",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "model",
+          "backdrop",
+          "symbol",
+          "rarity",
+          "number",
+          "player_sale_estimate",
+          "replacement_cost",
+          "lifecycle",
+          "owner_epoch"
+        ],
+        "title": "DisclosedGift",
+        "type": "object"
+      },
+      "DisclosedLedgerEntry": {
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "title": "Amount",
+            "type": "integer"
+          },
+          "balance_after": {
+            "title": "Balance After",
+            "type": "integer"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": ["DEBIT", "RESTORATION"],
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        "required": ["id", "kind", "amount", "balance_after", "created_at"],
+        "title": "DisclosedLedgerEntry",
+        "type": "object"
+      },
+      "DisclosedMarketSnapshot": {
+        "additionalProperties": false,
+        "properties": {
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "conversion_rule": {
+            "title": "Conversion Rule",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "cross_check_discrepancy": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cross Check Discrepancy"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "external_source": {
+            "title": "External Source",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "liquidity_discount": {
+            "title": "Liquidity Discount",
+            "type": "string"
+          },
+          "observed_at": {
+            "format": "date-time",
+            "title": "Observed At",
+            "type": "string"
+          },
+          "primary_source": {
+            "title": "Primary Source",
+            "type": "string"
+          },
+          "provenance": {
+            "additionalProperties": true,
+            "title": "Provenance",
+            "type": "object"
+          },
+          "source_currency": {
+            "title": "Source Currency",
+            "type": "string"
+          },
+          "source_payload": {
+            "additionalProperties": true,
+            "title": "Source Payload",
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "collection_id",
+          "primary_source",
+          "external_source",
+          "source_currency",
+          "conversion_rule",
+          "liquidity_discount",
+          "source_payload",
+          "provenance",
+          "cross_check_discrepancy",
+          "observed_at",
+          "expires_at",
+          "created_at"
+        ],
+        "title": "DisclosedMarketSnapshot",
+        "type": "object"
+      },
+      "DisclosedPoolVersion": {
+        "additionalProperties": false,
+        "properties": {
+          "actual_rtp": {
+            "title": "Actual Rtp",
+            "type": "string"
+          },
+          "commitment": {
+            "title": "Commitment",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "expected_value": {
+            "title": "Expected Value",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "manifest": {
+            "$ref": "#/components/schemas/PoolManifest"
+          },
+          "market_snapshot_id": {
+            "title": "Market Snapshot Id",
+            "type": "string"
+          },
+          "operator_margin": {
+            "title": "Operator Margin",
+            "type": "string"
+          },
+          "price": {
+            "title": "Price",
+            "type": "integer"
+          },
+          "remaining_count": {
+            "title": "Remaining Count",
+            "type": "integer"
+          },
+          "value_distribution": {
+            "additionalProperties": true,
+            "title": "Value Distribution",
+            "type": "object"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "commitment",
+          "manifest",
+          "price",
+          "expected_value",
+          "actual_rtp",
+          "operator_margin",
+          "remaining_count",
+          "value_distribution",
+          "market_snapshot_id",
+          "created_at"
+        ],
+        "title": "DisclosedPoolVersion",
+        "type": "object"
+      },
+      "DisclosedRound": {
+        "additionalProperties": false,
+        "properties": {
+          "closes_at": {
+            "format": "date-time",
+            "title": "Closes At",
+            "type": "string"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "disclosed_at": {
+            "format": "date-time",
+            "title": "Disclosed At",
+            "type": "string"
+          },
+          "disclosure_deadline": {
+            "format": "date-time",
+            "title": "Disclosure Deadline",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "opens_at": {
+            "format": "date-time",
+            "title": "Opens At",
+            "type": "string"
+          },
+          "status": {
+            "const": "DISCLOSED",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "collection_id",
+          "status",
+          "opens_at",
+          "closes_at",
+          "disclosure_deadline",
+          "disclosed_at"
+        ],
+        "title": "DisclosedRound",
+        "type": "object"
+      },
+      "DisclosurePackage": {
+        "additionalProperties": false,
+        "properties": {
+          "algorithms": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Algorithms",
+            "type": "object"
+          },
+          "asset_mode": {
+            "const": "simulated",
+            "default": "simulated",
+            "title": "Asset Mode",
+            "type": "string"
+          },
+          "bets": {
+            "items": {
+              "$ref": "#/components/schemas/DisclosedBet"
+            },
+            "title": "Bets",
+            "type": "array"
+          },
+          "gifts": {
+            "items": {
+              "$ref": "#/components/schemas/DisclosedGift"
+            },
+            "title": "Gifts",
+            "type": "array"
+          },
+          "market_snapshots": {
+            "items": {
+              "$ref": "#/components/schemas/DisclosedMarketSnapshot"
+            },
+            "title": "Market Snapshots",
+            "type": "array"
+          },
+          "pool_versions": {
+            "items": {
+              "$ref": "#/components/schemas/DisclosedPoolVersion"
+            },
+            "title": "Pool Versions",
+            "type": "array"
+          },
+          "round": {
+            "$ref": "#/components/schemas/DisclosedRound"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "round",
+          "algorithms",
+          "pool_versions",
+          "market_snapshots",
+          "bets",
+          "gifts"
+        ],
+        "title": "DisclosurePackage",
+        "type": "object"
+      },
+      "DisclosureSummary": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "download_url": {
+            "title": "Download Url",
+            "type": "string"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          }
+        },
+        "required": ["sha256", "created_at", "download_url"],
+        "title": "DisclosureSummary",
+        "type": "object"
+      },
+      "GiftResult": {
+        "properties": {
+          "backdrop": {
+            "title": "Backdrop",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "number": {
+            "title": "Number",
+            "type": "integer"
+          },
+          "player_sale_estimate": {
+            "title": "Player Sale Estimate",
+            "type": "integer"
+          },
+          "rarity": {
+            "title": "Rarity",
+            "type": "string"
+          },
+          "symbol": {
+            "title": "Symbol",
+            "type": "string"
+          },
+          "ticket_price": {
+            "title": "Ticket Price",
+            "type": "integer"
+          },
+          "value_minus_ticket": {
+            "title": "Value Minus Ticket",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "model",
+          "backdrop",
+          "symbol",
+          "rarity",
+          "number",
+          "player_sale_estimate",
+          "ticket_price",
+          "value_minus_ticket"
+        ],
+        "title": "GiftResult",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "InventoryGift": {
+        "properties": {
+          "awarded_at": {
+            "format": "date-time",
+            "title": "Awarded At",
+            "type": "string"
+          },
+          "backdrop": {
+            "title": "Backdrop",
+            "type": "string"
+          },
+          "bet_id": {
+            "title": "Bet Id",
+            "type": "string"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "number": {
+            "title": "Number",
+            "type": "integer"
+          },
+          "player_sale_estimate": {
+            "title": "Player Sale Estimate",
+            "type": "integer"
+          },
+          "rarity": {
+            "title": "Rarity",
+            "type": "string"
+          },
+          "round_id": {
+            "title": "Round Id",
+            "type": "string"
+          },
+          "symbol": {
+            "title": "Symbol",
+            "type": "string"
+          },
+          "ticket_price": {
+            "title": "Ticket Price",
+            "type": "integer"
+          },
+          "value_minus_ticket": {
+            "title": "Value Minus Ticket",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "bet_id",
+          "collection_id",
+          "round_id",
+          "model",
+          "backdrop",
+          "symbol",
+          "rarity",
+          "number",
+          "player_sale_estimate",
+          "ticket_price",
+          "value_minus_ticket",
+          "awarded_at"
+        ],
+        "title": "InventoryGift",
+        "type": "object"
+      },
+      "InventoryResponse": {
+        "properties": {
+          "asset_mode": {
+            "const": "simulated",
+            "default": "simulated",
+            "title": "Asset Mode",
+            "type": "string"
+          },
+          "gifts": {
+            "items": {
+              "$ref": "#/components/schemas/InventoryGift"
+            },
+            "title": "Gifts",
+            "type": "array"
+          }
+        },
+        "required": ["gifts"],
+        "title": "InventoryResponse",
+        "type": "object"
+      },
+      "ManifestGift": {
+        "additionalProperties": false,
+        "properties": {
+          "backdrop": {
+            "minLength": 1,
+            "title": "Backdrop",
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "title": "Id",
+            "type": "string"
+          },
+          "model": {
+            "minLength": 1,
+            "title": "Model",
+            "type": "string"
+          },
+          "number": {
+            "minimum": 0.0,
+            "title": "Number",
+            "type": "integer"
+          },
+          "player_sale_estimate": {
+            "minimum": 0.0,
+            "title": "Player Sale Estimate",
+            "type": "integer"
+          },
+          "rarity": {
+            "minLength": 1,
+            "title": "Rarity",
+            "type": "string"
+          },
+          "replacement_cost": {
+            "minimum": 0.0,
+            "title": "Replacement Cost",
+            "type": "integer"
+          },
+          "symbol": {
+            "minLength": 1,
+            "title": "Symbol",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "model",
+          "backdrop",
+          "symbol",
+          "rarity",
+          "number",
+          "player_sale_estimate",
+          "replacement_cost"
+        ],
+        "title": "ManifestGift",
+        "type": "object"
+      },
+      "PoolManifest": {
+        "additionalProperties": false,
+        "properties": {
+          "gifts": {
+            "items": {
+              "$ref": "#/components/schemas/ManifestGift"
+            },
+            "minItems": 1,
+            "title": "Gifts",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          }
+        },
+        "required": ["gifts"],
+        "title": "PoolManifest",
+        "type": "object"
+      },
+      "PublicPoolVersion": {
+        "properties": {
+          "actual_rtp": {
+            "title": "Actual Rtp",
+            "type": "string"
+          },
+          "commitment": {
+            "title": "Commitment",
+            "type": "string"
+          },
+          "commitment_algorithm": {
+            "const": "SHA-256/gift-pool-v1",
+            "default": "SHA-256/gift-pool-v1",
+            "title": "Commitment Algorithm",
+            "type": "string"
+          },
+          "draw_algorithm": {
+            "const": "gift-draw-v1",
+            "default": "gift-draw-v1",
+            "title": "Draw Algorithm",
+            "type": "string"
+          },
+          "expected_value": {
+            "title": "Expected Value",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "operator_margin": {
+            "title": "Operator Margin",
+            "type": "string"
+          },
+          "price": {
+            "title": "Price",
+            "type": "integer"
+          },
+          "remaining_count": {
+            "title": "Remaining Count",
+            "type": "integer"
+          },
+          "rounding_premium_stars": {
+            "title": "Rounding Premium Stars",
+            "type": "string"
+          },
+          "value_distribution": {
+            "$ref": "#/components/schemas/ValueDistribution"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "commitment",
+          "price",
+          "expected_value",
+          "actual_rtp",
+          "rounding_premium_stars",
+          "operator_margin",
+          "remaining_count",
+          "value_distribution"
+        ],
+        "title": "PublicPoolVersion",
+        "type": "object"
+      },
+      "PublicRound": {
+        "properties": {
+          "closes_at": {
+            "format": "date-time",
+            "title": "Closes At",
+            "type": "string"
+          },
+          "disclosure_deadline": {
+            "format": "date-time",
+            "title": "Disclosure Deadline",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "opens_at": {
+            "format": "date-time",
+            "title": "Opens At",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "opens_at",
+          "closes_at",
+          "disclosure_deadline"
+        ],
+        "title": "PublicRound",
+        "type": "object"
+      },
+      "PublicValuation": {
+        "properties": {
+          "conversion_rule": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Conversion Rule",
+            "type": "object"
+          },
+          "cross_check_discrepancy": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cross Check Discrepancy"
+          },
+          "discrepancy_action": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discrepancy Action"
+          },
+          "discrepancy_threshold": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discrepancy Threshold"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "external_attribution": {
+            "title": "External Attribution",
+            "type": "string"
+          },
+          "external_license": {
+            "const": "CC BY 4.0",
+            "default": "CC BY 4.0",
+            "title": "External License",
+            "type": "string"
+          },
+          "external_source": {
+            "title": "External Source",
+            "type": "string"
+          },
+          "liquidity_discount": {
+            "title": "Liquidity Discount",
+            "type": "string"
+          },
+          "observed_at": {
+            "format": "date-time",
+            "title": "Observed At",
+            "type": "string"
+          },
+          "primary_source": {
+            "title": "Primary Source",
+            "type": "string"
+          },
+          "source_currency": {
+            "title": "Source Currency",
+            "type": "string"
+          },
+          "stale": {
+            "title": "Stale",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "primary_source",
+          "external_source",
+          "external_attribution",
+          "source_currency",
+          "conversion_rule",
+          "liquidity_discount",
+          "observed_at",
+          "expires_at",
+          "stale",
+          "cross_check_discrepancy",
+          "discrepancy_threshold",
+          "discrepancy_action"
+        ],
+        "title": "PublicValuation",
+        "type": "object"
+      },
+      "RoundAuditResponse": {
+        "properties": {
+          "asset_mode": {
+            "const": "simulated",
+            "default": "simulated",
+            "title": "Asset Mode",
+            "type": "string"
+          },
+          "collection": {
+            "$ref": "#/components/schemas/CollectionSummary"
+          },
+          "disclosure": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DisclosureSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "round": {
+            "$ref": "#/components/schemas/PublicRound"
+          }
+        },
+        "required": ["round", "collection", "disclosure"],
+        "title": "RoundAuditResponse",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "ValueDistribution": {
+        "properties": {
+          "at_or_above_ticket_count": {
+            "title": "At Or Above Ticket Count",
+            "type": "integer"
+          },
+          "below_ticket_count": {
+            "title": "Below Ticket Count",
+            "type": "integer"
+          },
+          "maximum": {
+            "title": "Maximum",
+            "type": "string"
+          },
+          "median": {
+            "title": "Median",
+            "type": "string"
+          },
+          "minimum": {
+            "title": "Minimum",
+            "type": "string"
+          }
+        },
+        "required": [
+          "minimum",
+          "median",
+          "maximum",
+          "below_ticket_count",
+          "at_or_above_ticket_count"
+        ],
+        "title": "ValueDistribution",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "GwenGift Demo API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/account": {
+      "get": {
+        "description": "Authenticates Telegram initData and returns only the caller's simulated state.",
+        "operationId": "read_account_api_account_get",
+        "parameters": [
+          {
+            "description": "Telegram Mini App initData",
+            "in": "header",
+            "name": "X-Telegram-Init-Data",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Telegram Mini App initData",
+              "title": "X-Telegram-Init-Data"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get the authenticated demo account",
+        "tags": ["account"]
+      }
+    },
+    "/api/account/attempts": {
+      "get": {
+        "description": "Returns pending, cancelled, and completed attempts for the authenticated caller.",
+        "operationId": "read_attempt_history_api_account_attempts_get",
+        "parameters": [
+          {
+            "description": "Telegram Mini App initData",
+            "in": "header",
+            "name": "X-Telegram-Init-Data",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Telegram Mini App initData",
+              "title": "X-Telegram-Init-Data"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttemptHistoryResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List active-epoch demo attempts",
+        "tags": ["inventory"]
+      }
+    },
+    "/api/account/inventory": {
+      "get": {
+        "description": "Returns only simulated gifts awarded to the authenticated caller.",
+        "operationId": "read_inventory_api_account_inventory_get",
+        "parameters": [
+          {
+            "description": "Telegram Mini App initData",
+            "in": "header",
+            "name": "X-Telegram-Init-Data",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Telegram Mini App initData",
+              "title": "X-Telegram-Init-Data"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InventoryResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List active-epoch virtual gifts",
+        "tags": ["inventory"]
+      }
+    },
+    "/api/account/reset": {
+      "post": {
+        "description": "Starts a new demo epoch; global audit records are preserved.",
+        "operationId": "reset_account_api_account_reset_post",
+        "parameters": [
+          {
+            "description": "Telegram Mini App initData",
+            "in": "header",
+            "name": "X-Telegram-Init-Data",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Telegram Mini App initData",
+              "title": "X-Telegram-Init-Data"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Reset the authenticated demo account",
+        "tags": ["account"]
+      }
+    },
+    "/api/bets": {
+      "post": {
+        "description": "Binds the confirmed pool quote to future drand randomness; retries are idempotent.",
+        "operationId": "create_bet_endpoint_api_bets_post",
+        "parameters": [
+          {
+            "description": "Telegram Mini App initData",
+            "in": "header",
+            "name": "X-Telegram-Init-Data",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Telegram Mini App initData",
+              "title": "X-Telegram-Init-Data"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBetRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BetResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create or retry a demo draw",
+        "tags": ["bets"]
+      }
+    },
+    "/api/bets/{bet_id}": {
+      "get": {
+        "description": "Returns pending state or the completed gift and locally verified beacon evidence.",
+        "operationId": "get_bet_endpoint_api_bets__bet_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bet_id",
+            "required": true,
+            "schema": {
+              "title": "Bet Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Telegram Mini App initData",
+            "in": "header",
+            "name": "X-Telegram-Init-Data",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Telegram Mini App initData",
+              "title": "X-Telegram-Init-Data"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BetResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Poll an owned demo draw",
+        "tags": ["bets"]
+      }
+    },
+    "/api/collections": {
+      "get": {
+        "description": "Returns aggregate pool statistics and public provenance, never hidden gift manifests.",
+        "operationId": "list_collections_api_collections_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List all demo collections",
+        "tags": ["collections"]
+      }
+    },
+    "/api/collections/{collection_id}": {
+      "get": {
+        "description": "Excludes gift identities, attributes, evidence links, and valuation internals until disclosure.",
+        "operationId": "get_collection_api_collections__collection_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "collection_id",
+            "required": true,
+            "schema": {
+              "title": "Collection Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get public collection economics and provenance",
+        "tags": ["collections"]
+      }
+    },
+    "/api/health": {
+      "get": {
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Health Api Health Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health",
+        "tags": ["system"]
+      }
+    },
+    "/api/rounds/{round_id}/audit": {
+      "get": {
+        "description": "Exposes only public aggregates before disclosure and download metadata afterward.",
+        "operationId": "read_round_audit_api_rounds__round_id__audit_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "round_id",
+            "required": true,
+            "schema": {
+              "title": "Round Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoundAuditResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Inspect current or disclosed round evidence",
+        "tags": ["disclosures"]
+      }
+    },
+    "/api/rounds/{round_id}/disclosure": {
+      "get": {
+        "description": "Returns the immutable canonical JSON package after sell-out or deadline disclosure.",
+        "operationId": "download_disclosure_api_rounds__round_id__disclosure_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "round_id",
+            "required": true,
+            "schema": {
+              "title": "Round Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisclosurePackage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Download a disclosed round package",
+        "tags": ["disclosures"]
+      }
+    }
+  }
+}

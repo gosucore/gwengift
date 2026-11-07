@@ -1,0 +1,16 @@
+.git
+.gitignore
+**/node_modules
+**/dist
+**/artifacts
+**/test-results
+**/playwright-report
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+**/.env
+**/data
+openspec
+.claude

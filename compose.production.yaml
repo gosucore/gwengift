@@ -1,0 +1,18 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      GWENGIFT_ENVIRONMENT: ${GWENGIFT_ENVIRONMENT:-production}
+      GWENGIFT_DATABASE_URL: sqlite:////data/gwengift.db
+      GWENGIFT_TELEGRAM_BOT_TOKEN: ${GWENGIFT_TELEGRAM_BOT_TOKEN:-}
+      GWENGIFT_DEV_IDENTITY_ENABLED: ${GWENGIFT_DEV_IDENTITY_ENABLED:-false}
+    volumes:
+      - gwengift-production-data:/data
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+volumes:
+  gwengift-production-data:

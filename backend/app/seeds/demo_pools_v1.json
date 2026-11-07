@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "seed_version": "2026-11-06.1",
+  "round_duration_hours": 168,
+  "collections": [
+    {
+      "id": "plush-pepe",
+      "name": "Plush Pepe",
+      "description": "Simulated plush characters with emerald details.",
+      "gifts": [
+        {"number": 1, "model": "Classic", "backdrop": "Emerald", "symbol": "Clover", "rarity": "Common", "player_sale_estimate": 90, "replacement_cost": 85},
+        {"number": 2, "model": "Velvet", "backdrop": "Midnight", "symbol": "Moon", "rarity": "Uncommon", "player_sale_estimate": 110, "replacement_cost": 100},
+        {"number": 3, "model": "Golden", "backdrop": "Sunset", "symbol": "Star", "rarity": "Rare", "player_sale_estimate": 135, "replacement_cost": 120},
+        {"number": 4, "model": "Royal", "backdrop": "Aurora", "symbol": "Crown", "rarity": "Epic", "player_sale_estimate": 180, "replacement_cost": 160}
+      ]
+    },
+    {
+      "id": "durovs-cap",
+      "name": "Durov's Cap",
+      "description": "Simulated caps in monochrome and neon variants.",
+      "gifts": [
+        {"number": 1, "model": "Mono", "backdrop": "Graphite", "symbol": "Bolt", "rarity": "Common", "player_sale_estimate": 180, "replacement_cost": 165},
+        {"number": 2, "model": "Denim", "backdrop": "Cobalt", "symbol": "Wave", "rarity": "Uncommon", "player_sale_estimate": 220, "replacement_cost": 200},
+        {"number": 3, "model": "Neon", "backdrop": "Magenta", "symbol": "Pulse", "rarity": "Rare", "player_sale_estimate": 260, "replacement_cost": 235},
+        {"number": 4, "model": "Platinum", "backdrop": "Ice", "symbol": "Diamond", "rarity": "Epic", "player_sale_estimate": 340, "replacement_cost": 300}
+      ]
+    },
+    {
+      "id": "astral-shard",
+      "name": "Astral Shard",
+      "description": "Simulated crystalline shards from celestial landscapes.",
+      "gifts": [
+        {"number": 1, "model": "Quartz", "backdrop": "Nebula", "symbol": "Orbit", "rarity": "Common", "player_sale_estimate": 450, "replacement_cost": 410},
+        {"number": 2, "model": "Amethyst", "backdrop": "Galaxy", "symbol": "Comet", "rarity": "Uncommon", "player_sale_estimate": 550, "replacement_cost": 500},
+        {"number": 3, "model": "Sapphire", "backdrop": "Eclipse", "symbol": "Nova", "rarity": "Rare", "player_sale_estimate": 700, "replacement_cost": 630},
+        {"number": 4, "model": "Prism", "backdrop": "Supernova", "symbol": "Infinity", "rarity": "Epic", "player_sale_estimate": 900, "replacement_cost": 800}
+      ]
+    },
+    {
+      "id": "vintage-cigar",
+      "name": "Vintage Cigar",
+      "description": "Simulated vintage pieces with art-deco presentation.",
+      "gifts": [
+        {"number": 1, "model": "Reserva", "backdrop": "Mahogany", "symbol": "Laurel", "rarity": "Common", "player_sale_estimate": 900, "replacement_cost": 820},
+        {"number": 2, "model": "Noir", "backdrop": "Onyx", "symbol": "Monogram", "rarity": "Uncommon", "player_sale_estimate": 1100, "replacement_cost": 1000},
+        {"number": 3, "model": "Amber", "backdrop": "Copper", "symbol": "Sun", "rarity": "Rare", "player_sale_estimate": 1400, "replacement_cost": 1260},
+        {"number": 4, "model": "Imperial", "backdrop": "Champagne", "symbol": "Crest", "rarity": "Epic", "player_sale_estimate": 1800, "replacement_cost": 1600}
+      ]
+    },
+    {
+      "id": "signet-ring",
+      "name": "Signet Ring",
+      "description": "Simulated engraved rings with geometric emblems.",
+      "gifts": [
+        {"number": 1, "model": "Steel", "backdrop": "Slate", "symbol": "Hexagon", "rarity": "Common", "player_sale_estimate": 1350, "replacement_cost": 1220},
+        {"number": 2, "model": "Silver", "backdrop": "Pearl", "symbol": "Key", "rarity": "Uncommon", "player_sale_estimate": 1600, "replacement_cost": 1450},
+        {"number": 3, "model": "Gold", "backdrop": "Royal", "symbol": "Shield", "rarity": "Rare", "player_sale_estimate": 2000, "replacement_cost": 1800},
+        {"number": 4, "model": "Obsidian", "backdrop": "Void", "symbol": "Eye", "rarity": "Epic", "player_sale_estimate": 2500, "replacement_cost": 2250}
+      ]
+    },
+    {
+      "id": "diamond-ring",
+      "name": "Diamond Ring",
+      "description": "Simulated gemstone rings with luminous settings.",
+      "gifts": [
+        {"number": 1, "model": "Solitaire", "backdrop": "Frost", "symbol": "Spark", "rarity": "Common", "player_sale_estimate": 2250, "replacement_cost": 2050},
+        {"number": 2, "model": "Halo", "backdrop": "Rose", "symbol": "Halo", "rarity": "Uncommon", "player_sale_estimate": 2700, "replacement_cost": 2450},
+        {"number": 3, "model": "Radiant", "backdrop": "Ocean", "symbol": "Ray", "rarity": "Rare", "player_sale_estimate": 3300, "replacement_cost": 3000},
+        {"number": 4, "model": "Eternity", "backdrop": "Celestial", "symbol": "Eternity", "rarity": "Epic", "player_sale_estimate": 4200, "replacement_cost": 3800}
+      ]
+    },
+    {
+      "id": "loot-bag",
+      "name": "Loot Bag",
+      "description": "Simulated treasure bags filled with playful surprises.",
+      "gifts": [
+        {"number": 1, "model": "Canvas", "backdrop": "Sand", "symbol": "Coin", "rarity": "Common", "player_sale_estimate": 70, "replacement_cost": 65},
+        {"number": 2, "model": "Leather", "backdrop": "Forest", "symbol": "Gem", "rarity": "Uncommon", "player_sale_estimate": 85, "replacement_cost": 78},
+        {"number": 3, "model": "Silk", "backdrop": "Ruby", "symbol": "Key", "rarity": "Rare", "player_sale_estimate": 100, "replacement_cost": 90},
+        {"number": 4, "model": "Gilded", "backdrop": "Gold", "symbol": "Treasure", "rarity": "Epic", "player_sale_estimate": 130, "replacement_cost": 115}
+      ]
+    },
+    {
+      "id": "toy-bear",
+      "name": "Toy Bear",
+      "description": "Simulated collectible bears in soft seasonal colors.",
+      "gifts": [
+        {"number": 1, "model": "Cotton", "backdrop": "Cream", "symbol": "Heart", "rarity": "Common", "player_sale_estimate": 120, "replacement_cost": 110},
+        {"number": 2, "model": "Wool", "backdrop": "Mint", "symbol": "Leaf", "rarity": "Uncommon", "player_sale_estimate": 150, "replacement_cost": 135},
+        {"number": 3, "model": "Cashmere", "backdrop": "Lavender", "symbol": "Ribbon", "rarity": "Rare", "player_sale_estimate": 180, "replacement_cost": 160},
+        {"number": 4, "model": "Brocade", "backdrop": "Burgundy", "symbol": "Medal", "rarity": "Epic", "player_sale_estimate": 240, "replacement_cost": 215}
+      ]
+    },
+    {
+      "id": "genie-lamp",
+      "name": "Genie Lamp",
+      "description": "Simulated magical lamps with engraved astral motifs.",
+      "gifts": [
+        {"number": 1, "model": "Brass", "backdrop": "Dune", "symbol": "Wish", "rarity": "Common", "player_sale_estimate": 600, "replacement_cost": 545},
+        {"number": 2, "model": "Bronze", "backdrop": "Oasis", "symbol": "Palm", "rarity": "Uncommon", "player_sale_estimate": 750, "replacement_cost": 680},
+        {"number": 3, "model": "Silver", "backdrop": "Moonlight", "symbol": "Crescent", "rarity": "Rare", "player_sale_estimate": 950, "replacement_cost": 855},
+        {"number": 4, "model": "Crystal", "backdrop": "Mirage", "symbol": "Genie", "rarity": "Epic", "player_sale_estimate": 1200, "replacement_cost": 1080}
+      ]
+    },
+    {
+      "id": "magic-potion",
+      "name": "Magic Potion",
+      "description": "Simulated glass potions with colorful arcane effects.",
+      "gifts": [
+        {"number": 1, "model": "Glass", "backdrop": "Herbal", "symbol": "Drop", "rarity": "Common", "player_sale_estimate": 300, "replacement_cost": 275},
+        {"number": 2, "model": "Faceted", "backdrop": "Mystic", "symbol": "Rune", "rarity": "Uncommon", "player_sale_estimate": 375, "replacement_cost": 340},
+        {"number": 3, "model": "Iridescent", "backdrop": "Alchemy", "symbol": "Elixir", "rarity": "Rare", "player_sale_estimate": 450, "replacement_cost": 405},
+        {"number": 4, "model": "Ethereal", "backdrop": "Arcane", "symbol": "Phoenix", "rarity": "Epic", "player_sale_estimate": 600, "replacement_cost": 540}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+services:
+  backend:
+    image: python:3.11-slim
+    working_dir: /app/backend
+    command: sh -c "python -m pip install --no-cache-dir -e '.[dev]' && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    environment:
+      GWENGIFT_ENVIRONMENT: development
+      GWENGIFT_DATABASE_URL: sqlite:////data/gwengift.db
+      GWENGIFT_DEV_IDENTITY_ENABLED: "true"
+    volumes:
+      - .:/app
+      - gwengift-data:/data
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  frontend:
+    image: node:18-alpine
+    working_dir: /app/frontend
+    command: sh -c "npm ci && npm run dev -- --host 0.0.0.0"
+    environment:
+      VITE_API_PROXY_TARGET: http://backend:8000
+    volumes:
+      - .:/app
+      - gwengift-node-modules:/app/frontend/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  gwengift-data:
+  gwengift-node-modules:
