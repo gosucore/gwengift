@@ -2,6 +2,7 @@ from decimal import Decimal
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
+from urllib.parse import urlparse
 
 from pydantic import Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -40,6 +41,9 @@ class Settings(BaseSettings):
     draw_lease_grace_seconds: int = Field(default=30, gt=0)
     worker_poll_interval_seconds: float = Field(default=1, gt=0)
     frontend_dist_path: Path = Path("../frontend/dist")
+    tracing_enabled: bool = False
+    otel_exporter_otlp_traces_endpoint: str | None = None
+    tracing_service_namespace: str = Field(default="gwengift", min_length=1)
 
     @model_validator(mode="after")
     def validate_production_credentials(self) -> "Settings":
@@ -48,6 +52,25 @@ class Settings(BaseSettings):
                 raise ValueError("GWENGIFT_TELEGRAM_BOT_TOKEN is required in production")
             if self.dev_identity_enabled:
                 raise ValueError("Development identity cannot be enabled in production")
+        if self.tracing_enabled:
+            endpoint = self.otel_exporter_otlp_traces_endpoint
+            try:
+                parsed = urlparse(endpoint or "")
+                hostname = parsed.hostname
+                _ = parsed.port
+            except ValueError:
+                raise ValueError(
+                    "A valid HTTP(S) OTLP traces endpoint is required when tracing is enabled"
+                ) from None
+            if (
+                parsed.scheme not in {"http", "https"}
+                or not hostname
+                or parsed.query
+                or parsed.fragment
+            ):
+                raise ValueError(
+                    "A valid HTTP(S) OTLP traces endpoint is required when tracing is enabled"
+                )
         return self
 
 

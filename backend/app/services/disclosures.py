@@ -21,6 +21,7 @@ from app.models import (
     utc_now,
 )
 from app.services.commitments import PoolManifest
+from app.telemetry import operation_span, set_operation_attribute
 
 DISCLOSURE_SCHEMA_VERSION: Literal[1] = 1
 
@@ -295,6 +296,16 @@ def _build_package(session: Session, round_: Round, disclosed_at: datetime) -> D
 
 
 def disclose_round_in_transaction(
+    session: Session, round_id: str, *, now: datetime | None = None
+) -> Disclosure:
+    with operation_span("round.disclose", attributes={"gwengift.round_id": round_id}) as span:
+        disclosure = _disclose_round_in_transaction(session, round_id, now=now)
+        if span is not None:
+            set_operation_attribute(span, "gwengift.outcome", "DISCLOSED")
+        return disclosure
+
+
+def _disclose_round_in_transaction(
     session: Session, round_id: str, *, now: datetime | None = None
 ) -> Disclosure:
     existing = session.scalar(select(Disclosure).where(Disclosure.round_id == round_id))

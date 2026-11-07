@@ -7,16 +7,35 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.config import Settings, get_settings
-from app.db import SessionLocal
+from app.db import SessionLocal, engine
 from app.models import Round, utc_now
 from app.services.disclosures import disclose_round
 from app.services.drand_adapter import DrandAdapter
 from app.services.draws import recover_pending_bets
+from app.telemetry import instrument_worker, operation_span, set_operation_attribute
 
 logger = logging.getLogger("gwengift.worker")
 
 
 def run_worker_pass(
+    session: Session,
+    *,
+    adapter: DrandAdapter,
+    settings: Settings | None = None,
+    now: datetime | None = None,
+) -> dict[str, int]:
+    with operation_span("worker.pass") as span:
+        result = _run_worker_pass(session, adapter=adapter, settings=settings, now=now)
+        if span is not None:
+            set_operation_attribute(
+                span,
+                "gwengift.outcome",
+                f"recovered:{result['recovered_bets']},disclosed:{result['disclosed_rounds']}",
+            )
+        return result
+
+
+def _run_worker_pass(
     session: Session,
     *,
     adapter: DrandAdapter,
@@ -56,6 +75,7 @@ def run_worker_pass(
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     settings = get_settings()
+    instrument_worker(engine=engine, settings=settings)
     adapter = DrandAdapter()
     stopped = threading.Event()
 

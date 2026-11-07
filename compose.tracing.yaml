@@ -1,0 +1,50 @@
+services:
+  backend:
+    environment:
+      GWENGIFT_TRACING_ENABLED: "true"
+      GWENGIFT_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: http://jaeger:4318/v1/traces
+    depends_on:
+      jaeger:
+        condition: service_started
+
+  worker:
+    image: python:3.11-slim
+    working_dir: /app/backend
+    command: sh -c "python -m pip install --no-cache-dir -e . && python -m app.worker"
+    environment:
+      GWENGIFT_ENVIRONMENT: development
+      GWENGIFT_DATABASE_URL: sqlite:////data/gwengift.db
+      GWENGIFT_TRACING_ENABLED: "true"
+      GWENGIFT_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: http://jaeger:4318/v1/traces
+    volumes:
+      - .:/app
+      - gwengift-data:/data
+    depends_on:
+      backend:
+        condition: service_healthy
+      jaeger:
+        condition: service_started
+
+  jaeger-storage-init:
+    image: python:3.11-slim
+    command: python -c "import os; os.chown('/badger', 10001, 0); os.chmod('/badger', 0o770)"
+    volumes:
+      - gwengift-jaeger-data:/badger
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.74.0
+    depends_on:
+      jaeger-storage-init:
+        condition: service_completed_successfully
+    environment:
+      SPAN_STORAGE_TYPE: badger
+      BADGER_EPHEMERAL: "false"
+      BADGER_DIRECTORY_VALUE: /badger/data
+      BADGER_DIRECTORY_KEY: /badger/key
+    volumes:
+      - gwengift-jaeger-data:/badger
+    ports:
+      - "${GWENGIFT_JAEGER_HOST_PORT:-127.0.0.1:16686}:16686"
+
+volumes:
+  gwengift-jaeger-data:

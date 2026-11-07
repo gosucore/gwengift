@@ -21,6 +21,7 @@ from app.services.disclosures import disclose_round_in_transaction
 from app.services.drand_adapter import DrandAdapter, DrandAdapterError
 from app.services.pools import create_pool_version_in_transaction
 from app.services.selection import select_gift
+from app.telemetry import operation_span, set_operation_attribute
 
 
 class DrawResolutionError(RuntimeError):
@@ -34,35 +35,64 @@ def _release_lease(session: Session, bet: Bet) -> None:
 
 
 def _cancel_in_transaction(session: Session, bet: Bet, now: datetime, reason: str) -> Bet:
-    if bet.state == "CANCELLED":
-        return bet
-    if bet.state == "COMPLETED":
-        raise DrawResolutionError("A completed bet cannot be cancelled")
-    user = session.get(User, bet.user_id)
-    if user is None or user.active_epoch != bet.user_epoch:
-        raise DrawResolutionError("Cannot restore a debit outside its active demo epoch")
-    user.demo_balance += bet.price
-    session.add(
-        LedgerEntry(
-            user_id=user.id,
-            user_epoch=user.active_epoch,
-            bet_id=bet.id,
-            kind="RESTORATION",
-            amount=bet.price,
-            balance_after=user.demo_balance,
-            created_at=now,
+    with operation_span(
+        "draw.cancel",
+        attributes={
+            "gwengift.bet_id": bet.id,
+            "gwengift.round_id": bet.round_id,
+            "gwengift.collection_id": bet.collection_id,
+            "gwengift.drand_round": bet.future_beacon_round,
+        },
+    ) as span:
+        if bet.state == "CANCELLED":
+            return bet
+        if bet.state == "COMPLETED":
+            raise DrawResolutionError("A completed bet cannot be cancelled")
+        user = session.get(User, bet.user_id)
+        if user is None or user.active_epoch != bet.user_epoch:
+            raise DrawResolutionError("Cannot restore a debit outside its active demo epoch")
+        user.demo_balance += bet.price
+        session.add(
+            LedgerEntry(
+                user_id=user.id,
+                user_epoch=user.active_epoch,
+                bet_id=bet.id,
+                kind="RESTORATION",
+                amount=bet.price,
+                balance_after=user.demo_balance,
+                created_at=now,
+            )
         )
-    )
-    bet.state = "CANCELLED"
-    bet.cancellation_reason = reason
-    bet.resolved_at = now
-    bet.updated_at = now
-    _release_lease(session, bet)
-    session.flush()
-    return bet
+        bet.state = "CANCELLED"
+        bet.cancellation_reason = reason
+        bet.resolved_at = now
+        bet.updated_at = now
+        _release_lease(session, bet)
+        session.flush()
+        if span is not None:
+            set_operation_attribute(span, "gwengift.outcome", "CANCELLED")
+        return bet
 
 
 def resolve_bet(
+    session: Session,
+    bet_id: str,
+    *,
+    adapter: DrandAdapter,
+    settings: Settings | None = None,
+    now: datetime | None = None,
+) -> Bet:
+    with operation_span("draw.resolve", attributes={"gwengift.bet_id": bet_id}) as span:
+        bet = _resolve_bet(session, bet_id, adapter=adapter, settings=settings, now=now)
+        if span is not None:
+            set_operation_attribute(span, "gwengift.round_id", bet.round_id)
+            set_operation_attribute(span, "gwengift.collection_id", bet.collection_id)
+            set_operation_attribute(span, "gwengift.drand_round", bet.future_beacon_round)
+            set_operation_attribute(span, "gwengift.outcome", bet.state)
+        return bet
+
+
+def _resolve_bet(
     session: Session,
     bet_id: str,
     *,
@@ -182,15 +212,19 @@ def recover_pending_bets(
     now: datetime | None = None,
 ) -> list[Bet]:
     """Resume all persisted pending/interrupted bets after a process restart."""
-    with session.begin():
-        bet_ids = list(
-            session.scalars(
-                select(Bet.id)
-                .where(Bet.state.in_(["PENDING_RANDOMNESS", "RESOLVING"]))
-                .order_by(Bet.created_at)
-            ).all()
-        )
-    return [
-        resolve_bet(session, bet_id, adapter=adapter, settings=settings, now=now)
-        for bet_id in bet_ids
-    ]
+    with operation_span("draw.recovery") as span:
+        with session.begin():
+            bet_ids = list(
+                session.scalars(
+                    select(Bet.id)
+                    .where(Bet.state.in_(["PENDING_RANDOMNESS", "RESOLVING"]))
+                    .order_by(Bet.created_at)
+                ).all()
+            )
+        recovered = [
+            resolve_bet(session, bet_id, adapter=adapter, settings=settings, now=now)
+            for bet_id in bet_ids
+        ]
+        if span is not None:
+            set_operation_attribute(span, "gwengift.outcome", f"recovered:{len(recovered)}")
+        return recovered

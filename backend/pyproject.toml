@@ -10,11 +10,16 @@ requires-python = ">=3.11"
 dependencies = [
   "fastapi>=0.115,<1",
   "httpx>=0.27,<1",
-  "sqlalchemy>=2.0,<3",
+  "sqlalchemy>=2.0,<2.1",
   "alembic>=1.13,<2",
   "blspy>=2.0,<3",
   "pydantic-settings>=2.6,<3",
   "uvicorn[standard]>=0.32,<1",
+  "opentelemetry-sdk>=1.30,<2",
+  "opentelemetry-exporter-otlp-proto-http>=1.30,<2",
+  "opentelemetry-instrumentation-fastapi>=0.51b0,<1",
+  "opentelemetry-instrumentation-sqlalchemy>=0.51b0,<1",
+  "opentelemetry-instrumentation-httpx>=0.51b0,<1",
 ]
 
 [project.optional-dependencies]

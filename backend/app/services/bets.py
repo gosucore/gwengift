@@ -17,6 +17,7 @@ from app.models import (
 )
 from app.services.accounts import apply_demo_debit
 from app.services.drand_adapter import select_future_round
+from app.telemetry import operation_span, set_operation_attribute
 
 
 class BetCreationError(ValueError):
@@ -44,6 +45,35 @@ class LateAttemptError(BetCreationError):
 
 
 def create_bet(
+    session: Session,
+    *,
+    user_id: str,
+    collection_id: str,
+    idempotency_key: str,
+    expected_pool_version_id: str | None = None,
+    settings: Settings | None = None,
+    now: datetime | None = None,
+) -> Bet:
+    with operation_span("bet.create") as span:
+        bet = _create_bet(
+            session,
+            user_id=user_id,
+            collection_id=collection_id,
+            idempotency_key=idempotency_key,
+            expected_pool_version_id=expected_pool_version_id,
+            settings=settings,
+            now=now,
+        )
+        if span is not None:
+            set_operation_attribute(span, "gwengift.collection_id", bet.collection_id)
+            set_operation_attribute(span, "gwengift.bet_id", bet.id)
+            set_operation_attribute(span, "gwengift.round_id", bet.round_id)
+            set_operation_attribute(span, "gwengift.drand_round", bet.future_beacon_round)
+            set_operation_attribute(span, "gwengift.outcome", bet.state)
+        return bet
+
+
+def _create_bet(
     session: Session,
     *,
     user_id: str,

@@ -123,6 +123,24 @@ scripts/smoke-live.sh
 
 The [Telegram Mini App checklist](docs/telegram-mini-app-checklist.md) separates these local checks from hosted HTTPS/BotFather checks that require a real deployment.
 
+## Jaeger tracing
+
+OpenTelemetry tracing is optional and disabled by default. Start local development with the pinned Jaeger all-in-one service:
+
+```bash
+docker compose -f compose.yaml -f compose.tracing.yaml up --build
+```
+
+Open http://127.0.0.1:16686 and select `gwengift-api` or `gwengift-worker`. API and worker traces are correlated through the `gwengift.bet_id` and `gwengift.round_id` tags. The override stores traces in the `gwengift-jaeger-data` volume and publishes only the Jaeger UI/query API on loopback; OTLP collector ports remain internal.
+
+For production, set `GWENGIFT_TRACING_ENABLED=true` and `GWENGIFT_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` to an operator-controlled HTTPS OTLP endpoint. Production Compose does not expose Jaeger. Disable tracing to roll back without changing application data. See [tracing configuration, privacy, filtering, and limitations](docs/tracing.md); exported spans exclude Telegram credentials and identities, payloads, SQL values, and hidden pool data.
+
+Run the self-cleaning live tracing smoke test to create a quicknet-backed demo bet and verify API/worker correlation plus database and drand dependency spans in Jaeger:
+
+```bash
+scripts/smoke-tracing.sh
+```
+
 ## Independent round audit
 
 After sell-out or deadline disclosure, download `/api/rounds/{round_id}/disclosure` and verify the complete package offline:

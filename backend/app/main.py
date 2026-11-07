@@ -10,6 +10,8 @@ from app.api.disclosures import router as disclosure_router
 from app.api.inventory import router as inventory_router
 from app.api.routes import router
 from app.config import get_settings
+from app.db import engine
+from app.telemetry import instrument_application
 
 settings = get_settings()
 app = FastAPI(
@@ -37,3 +39,6 @@ if frontend_index.is_file():
         if _path.startswith("api/"):
             raise HTTPException(status_code=404, detail="API endpoint not found")
         return FileResponse(frontend_index)
+
+
+instrument_application(app, engine=engine, settings=settings)
